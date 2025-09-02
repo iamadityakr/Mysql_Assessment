@@ -1,0 +1,54 @@
+-- Select all students from course ID 101
+ SELECT * FROM Student WHERE cId = 101;
+
+-- Delete student with rollNo = 10
+ DELETE FROM Student WHERE rollNo = 10;
+
+-- Add DOB (date of birth) to Student table
+ ALTER TABLE Student ADD dob DATE;
+
+-- Modify column length
+ ALTER TABLE Faculty MODIFY fName VARCHAR(100);
+
+-- Drop a column (e.g. Qualification)
+ ALTER TABLE Faculty DROP COLUMN Qualification;
+
+-- Find books starting with "Data"
+ SELECT * FROM Book WHERE BName LIKE 'Data%';
+
+-- Find students with email ending in '@gmail.com'
+ SELECT * FROM Student WHERE email LIKE '%@gmail.com';
+
+-- Count number of students per course
+ SELECT cId, COUNT(*) AS student_count
+ FROM Student
+ GROUP BY cId;
+
+-- Show all books ordered by price (descending)
+ SELECT * FROM Book ORDER BY Price DESC;
+
+-- Show courses with more than 2 students
+ SELECT cId, COUNT(*) AS student_count
+ FROM Student
+ GROUP BY cId
+ HAVING COUNT(*) > 2;
+
+-- Update a student's phone number
+ UPDATE Student SET Phone = 9123456789 WHERE rollNo = 5;
+
+
+-- Students in CSE or EE (Course ID 101, 102)
+ SELECT * FROM Student WHERE cId IN (101, 102);
+
+-- Books priced between 400 and 600
+ SELECT * FROM Book WHERE Price BETWEEN 400 AND 600;
+
+-- Find students with no email set
+ SELECT * FROM Student WHERE email IS NULL;
+
+-- Total books issued per student, only if issued more than once
+ SELECT s.fName, COUNT(*) AS issue_count
+ FROM Library l
+ JOIN Student s ON l.rollNo = s.rollNo
+ GROUP BY s.fName
+ HAVING COUNT(*) > 1;

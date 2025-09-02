@@ -1,0 +1,114 @@
+
+CREATE DATABASE GLBajaj;
+USE GLBajaj;
+
+CREATE TABLE Course (
+    courseId INT PRIMARY KEY,
+    cName VARCHAR(50) NOT NULL,
+    Fees INT NOT NULL
+);
+
+CREATE TABLE Student (
+    rollNo INT PRIMARY KEY,
+    fName VARCHAR(50),
+    lName VARCHAR(50),
+    Phone BIGINT UNIQUE,
+    cId INT,
+    email VARCHAR(100) UNIQUE,
+    FOREIGN KEY (cId) REFERENCES Course(courseId)
+);
+
+CREATE TABLE Faculty (
+    fId INT PRIMARY KEY,
+    fName VARCHAR(50) NOT NULL,
+    Designation VARCHAR(50),
+    Qualification VARCHAR(100),
+    PhoneNo BIGINT UNIQUE,
+    cId INT,
+    FOREIGN KEY (cId) REFERENCES Course(courseId)
+);
+
+CREATE TABLE Book (
+    BId INT PRIMARY KEY,
+    BName VARCHAR(100) UNIQUE,
+    Author VARCHAR(100),
+    Publisher VARCHAR(100),
+    Price DECIMAL(10,2),
+    Qty INT
+);
+
+CREATE TABLE Library (
+    lId INT PRIMARY KEY,
+    bookId INT,
+    issueDate DATE,
+    returnDate DATE,
+    rollNo INT,
+    FOREIGN KEY (bookId) REFERENCES Book(BId),
+    FOREIGN KEY (rollNo) REFERENCES Student(rollNo)
+);
+
+CREATE TABLE Address (
+    AId INT PRIMARY KEY,
+    houseNo VARCHAR(20),
+    street VARCHAR(100),
+    city VARCHAR(50),
+    state VARCHAR(50),
+    pincode VARCHAR(10),
+    rNo INT,
+    FOREIGN KEY (rNo) REFERENCES Student(rollNo)
+);
+
+INSERT INTO Course (courseId, cName, Fees) VALUES
+(101, 'CSE', 100000),
+(102, 'EE', 75000),
+(103, 'Mech', 80000);
+
+INSERT INTO Student (rollNo, fName, lName, Phone, cId, email) VALUES
+(1, 'Amit', 'Sharma', 1873536897, 101, 'amie@gmail.com'),
+(2, 'Abhishek', 'Verma', 8765432109, 102, 'abhi@gmail.com'),
+(3, 'Aditya', 'Kumar', 7654321098, 103, 'charlie@gmail.com'),
+(4, 'NAthu', 'Yadav', 6543210987, 101, 'nathu@gmail.com'),
+(5, 'Eva', 'Rao', 5432109876, 102, 'eva@gmail.com'),
+(6, 'Farah', 'Kumari', 4321098765, 103, 'farah@gmail.com'),
+(7, 'Jennie', 'Das', 3210987654, 101, 'jennie@gmail.com'),
+(8, 'Hema', 'Singh', 2109876543, 102, 'hema@gmail.com'),
+(9, 'Ishaan', 'Patel', 1098765432, 103, 'ishaan@gmail.com'),
+(10, 'Jaya', 'Roy', 9988776655, 101, 'jaya@gmail.com');
+
+INSERT INTO Faculty (fId, fName, Designation, Qualification, PhoneNo, cId) VALUES
+(1, 'Dr. Rakesh', 'Professor', 'PhD CSE', 9988771122, 101),
+(2, 'Ms. Lata', 'Asst. Professor', 'M.Tech EE', 8877661122, 102),
+(3, 'Mr. Sunil', 'Lecturer', 'M.Tech Mech', 7766551122, 103),
+(4, 'Dr. Ayesha', 'Professor', 'PhD EE', 6655441122, 102),
+(5, 'Ms. Rani', 'Lecturer', 'M.Tech CSE', 5544331122, 101);
+
+INSERT INTO Book (BId, BName, Author, Publisher, Price, Qty) VALUES
+(1, 'Java Fundamentals', 'Herbert Schildt', 'McGraw Hill', 450.00, 10),
+(2, 'Digital Electronics', 'Morris Mano', 'Pearson', 550.00, 5),
+(3, 'Thermodynamics', 'Cengel', 'McGraw Hill', 600.00, 8),
+(4, 'Data Structures', 'Seymour Lipschutz', 'Schaum', 400.00, 7),
+(5, 'Control Systems', 'Nagrath & Gopal', 'New Age', 500.00, 6);
+
+INSERT INTO Library (lId, bookId, issueDate, returnDate, rollNo) VALUES
+(1, 1, '2025-08-01', '2025-08-15', 1),
+(2, 2, '2025-08-02', '2025-08-16', 2),
+(3, 3, '2025-08-03', '2025-08-17', 3),
+(4, 4, '2025-08-04', '2025-08-18', 4),
+(5, 5, '2025-08-05', '2025-08-19', 5),
+(6, 1, '2025-08-06', '2025-08-20', 6),
+(7, 2, '2025-08-07', '2025-08-21', 7),
+(8, 3, '2025-08-08', '2025-08-22', 8),
+(9, 4, '2025-08-09', '2025-08-23', 9),
+(10, 5, '2025-08-10', '2025-08-24', 10);
+
+INSERT INTO Address (AId, houseNo, street, city, state, pincode, rNo) VALUES
+(1, 'A-101', 'MG Road', 'Delhi', 'Delhi', '110001', 1),
+(2, 'B-202', 'Park Street', 'Kolkata', 'West Bengal', '700016', 2),
+(3, 'C-303', 'Anna Salai', 'Chennai', 'Tamil Nadu', '600002', 3),
+(4, 'D-404', 'JM Road', 'Pune', 'Maharashtra', '411005', 4),
+(5, 'E-505', 'Brigade Road', 'Bangalore', 'Karnataka', '560001', 5),
+(6, 'F-606', 'Sector 17', 'Chandigarh', 'Punjab', '160017', 6),
+(7, 'G-707', 'Civil Lines', 'Allahabad', 'UP', '211001', 7),
+(8, 'H-808', 'Marine Drive', 'Mumbai', 'Maharashtra', '400002', 8),
+(9, 'I-909', 'Boring Road', 'Patna', 'Bihar', '800001', 9),
+(10, 'J-010', 'Hazratganj', 'Lucknow', 'UP', '226001', 10);
